@@ -3,12 +3,13 @@
 ## Phase 1: Foundation & Authentication
 - [ ] **Project Scaffolding**
   - [ ] Initialize Express backend in `/backend`
-  - [ ] Create folder structure: `src/config`, `src/controllers`, `src/models`, `src/routes`, `src/middlewares`, `src/utils`
+  - [ ] Create folder structure: `src/config`, `src/controllers`, `src/models`, `src/routes`, `src/middlewares`, `src/utils`, `src/database/migrations`
   - [ ] Initialize React frontend in `/frontend` using Vite
   - [ ] Create root `.gitignore` file and configure it
 - [ ] **Role-Based Authentication (RBAC)**
-  - [ ] Create `User` Mongoose Schema (role: `customer` or `vendor`, default `isVerified: false`)
-  - [ ] Add bcrypt password hashing hook
+  - [ ] Setup Knex.js and PostGIS configuration
+  - [ ] Create Knex migrations for `users` table (with role and `isVerified`)
+  - [ ] Add bcrypt password hashing on register
   - [ ] Write registration and login controllers with JWT signing
   - [ ] Build `userAuth` and `checkRole` middlewares
 - [ ] **Frontend Auth Flow**
@@ -23,7 +24,8 @@
   - [ ] Create S3 pre-signed URL backend route
   - [ ] Build frontend image upload component (direct-to-S3)
 - [ ] **Listings Creation & Management**
-  - [ ] Create `Listing` Schema (geospatial index, TTL index for `closingTime`)
+  - [ ] Create Knex migration for `listings` table (PostGIS spatial geometry, foreign keys)
+  - [ ] Implement expired listings cron purge query
   - [ ] Write Listing CRUD endpoints (`POST`, `GET`, `DELETE`)
   - [ ] Build Vendor Listings UI with image upload
 
@@ -31,7 +33,7 @@
 - [ ] **Geospatial & Feed**
   - [ ] Write `GET /api/listings/nearby` endpoint
   - [ ] Build Redis grid-caching middleware
-  - [ ] Implement atomic reservation logic with `findOneAndUpdate`
+  - [ ] Implement atomic reservation logic with PostgreSQL Transactions
   - [ ] Build Customer Feed UI with location tracking
 
 ## Phase 4: Async Jobs & Rollbacks
@@ -46,7 +48,7 @@
 ## Phase 5: Containerization & Cloud Deployment
 - [ ] **Docker & Deployment**
   - [ ] Create backend Dockerfile
-  - [ ] Write `docker-compose.yml` for Node, Mongo, Redis
+  - [ ] Write `docker-compose.yml` for Node, Postgres, Redis, Kafka
   - [ ] Deploy and configure Nginx proxy on EC2
 
 ## Phase 6: Safety, Trust & Fraud Prevention
