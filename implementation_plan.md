@@ -74,12 +74,18 @@ This plan outlines the step-by-step checklist to build the Surplus Food Sharing 
 
 ---
 
-## Phase 4: Async Jobs & Rollbacks (Days 10–11)
+## Phase 4: Async Jobs, Kafka Events & Rollbacks (Days 10–11)
 
 - [ ] **BullMQ Email Queues**
   - [ ] Install `bullmq` and `ioredis`.
   - [ ] Set up an email background queue and worker.
   - [ ] On successful reservation, push a job to the queue. The worker sends a confirmation email containing pickup details asynchronously via `nodemailer`.
+
+- [ ] **Apache Kafka Event Pipeline**
+  - [ ] Set up a local Kafka broker using Docker (alongside Zookeeper).
+  - [ ] Install `kafkajs` in the backend.
+  - [ ] Create a Kafka producer utility to publish events on topics like `listing-events` (when new food is posted) and `reservation-events` (when food is claimed).
+  - [ ] Implement a lightweight consumer that logs these events for audit trailing / future analytics.
 
 - [ ] **Cancellation & Atomic Rollback**
   - [ ] Write `POST /api/reservations/:id/cancel` which marks reservation status as cancelled and atomically increments listing quantity: `findOneAndUpdate({ _id: listingId }, { $inc: { quantity: 1 } })`.
