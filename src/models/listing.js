@@ -82,16 +82,4 @@ listingSchema.index({
     status: 1,
 });
 
-// TTL index: Mongo's background sweeper removes docs ~60s after closingTime passes.
-// Not millisecond-precise — acceptable here since expiry is "food no longer available for pickup",
-// not a hard billing deadline.
-listingSchema.index(
-    {
-        closingTime: 1,
-    },
-    {
-        expireAfterSeconds: 0,
-    }
-);
-
 module.exports = mongoose.model("Listing", listingSchema);
