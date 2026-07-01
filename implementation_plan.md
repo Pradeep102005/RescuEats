@@ -10,8 +10,7 @@ This plan outlines the step-by-step checklist to build the Surplus Food Sharing 
   - [ ] Initialize Express backend in `/backend` (`npm init -y`, install `express`, `pg`, `knex`, `cors`, `dotenv`, `jsonwebtoken`, `bcrypt`).
   - [ ] Setup folder structure: `src/config`, `src/controllers`, `src/models`, `src/routes`, `src/middlewares`, `src/utils`, `src/database/migrations`.
   - [ ] Initialize React frontend in `/frontend` using Vite (`npm create vite@latest frontend -- --template react`).
-  - [ ] Set up basic git repository and `.gitignore` (ignoring `.env` and `node_modules`).
-
+  - [ ] Set up basic git repository and `.gitignore` (ignoring `.env` and 
 - [ ] **Role-Based Authentication (RBAC) & Database Migration**
   - [ ] Configure Knex database connection setup in `src/config/db.js`.
   - [ ] Create Knex migration for `users` table: `id` (UUID/Serial), `firstName`, `lastName`, `email` (unique), `password`, `role` (enum: `['customer', 'vendor']`), `isVerified` (Boolean, default false), `verificationDocUrl` (String), timestamps.
