@@ -43,18 +43,25 @@ const userSchema = new mongoose.Schema(
     }
 );
 
+const jwt = require("jsonwebtoken");
+
 // hash password before save, only if modified
-userSchema.pre("save", async function (next) {
-    if (!this.isModified("passwordHash")) return next();
+userSchema.pre("save", async function () {
+    if (!this.isModified("passwordHash")) return;
 
     this.passwordHash = await bcrypt.hash(this.passwordHash, 10);
-    next();
 });
 
 userSchema.methods.comparePassword = function (plainPassword) {
     return bcrypt.compare(plainPassword, this.passwordHash);
 };
 
-userSchema.index({ email: 1 }, { unique: true });
+userSchema.methods.getJWT = async function () {
+    const user = this;
+    const token = await jwt.sign({ _id: user._id }, process.env.JWT_SECRET || "devSecret", {
+        expiresIn: "7d",
+    });
+    return token;
+};
 
 module.exports = mongoose.model("User", userSchema);
