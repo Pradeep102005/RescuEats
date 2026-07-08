@@ -1,15 +1,10 @@
 # Workplan: Surplus Food Sharing Marketplace (RescuEats)
 
-## Phase 1: Foundation & Authentication
-- [ ] **Project Scaffolding**
-  - [ ] Initialize Express backend in `/backend`
-  - [ ] Create folder structure: `src/config`, `src/controllers`, `src/models`, `src/routes`, `src/middlewares`, `src/utils`, `src/database/migrations`
-  - [ ] Initialize React frontend in `/frontend` using Vite
-  - [ ] Create root `.gitignore` file and configure it
+- [x] **Project Scaffolding**
+  - [x] Create folder structure: `src/config`, `src/models`, etc.
+  - [x] Create Mongoose schemas for `User`, `VendorProfile`, `Listing`, `Reservation`, `Payment`, `Rating`, `Report`, and `Notification`
 - [ ] **Role-Based Authentication (RBAC)**
-  - [ ] Setup Knex.js and PostGIS configuration
-  - [ ] Create Knex migrations for `users` table (with role and `isVerified`)
-  - [ ] Add bcrypt password hashing on register
+  - [ ] Setup MongoDB configuration in `src/config/database.js`
   - [ ] Write registration and login controllers with JWT signing
   - [ ] Build `userAuth` and `checkRole` middlewares
 - [ ] **Frontend Auth Flow**
