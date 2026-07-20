@@ -29,7 +29,7 @@ authRouter.post("/register/customer", async (req, res) => {
         });
 
         await user.save();
-        res.status(201).json({ message: "Customer registered successfully", data: user });
+        res.status(201).json({ message: "Registration Successfull", data: user });
     } catch (err) {
         res.status(400).json({ error: err.message });
     }

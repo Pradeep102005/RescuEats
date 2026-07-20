@@ -4,6 +4,9 @@ const cors = require("cors");
 const http = require("http");
 const connectDb = require("./config/database");
 const authRouter = require("./routes/auth");
+const itemRouter = require("./routes/addItem");
+const userAuth = require("./middlewares/userAuth");
+const checkRole = require("./middlewares/checkRole");
 
 const app = express();
 
@@ -17,7 +20,12 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+// Public routes — no auth needed
 app.use("/", authRouter);
+
+// Vendor-only routes — auth + role gated at mount level
+// Any request to /vendor/* must pass through userAuth → checkRole("vendor")
+app.use("/vendor", userAuth, checkRole("vendor"), itemRouter);
 
 const server = http.createServer(app);
 

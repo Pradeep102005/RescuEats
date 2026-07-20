@@ -1,0 +1,61 @@
+const express = require("express");
+const itemRouter = express.Router();
+const Listing = require("../models/listing");
+const VendorProfile = require("../models/vendorProfile");
+
+// Role check + auth already handled at the router-group level in app.js
+// This handler is guaranteed to only be reached by authenticated vendors.
+
+// 1. Add Item Route
+itemRouter.post("/add-item", async (req, res) => {
+    try {
+        // Find the vendor's profile to link the listing
+        const vendorProfile = await VendorProfile.findOne({ userId: req.user._id });
+        if (!vendorProfile) {
+            return res.status(404).json({ error: "Vendor profile not found. Complete your profile first." });
+        }
+
+        const { title, description, images, baseCost, quantityTotal, closingTime } = req.body;
+
+        // Basic validations
+        if (!title || !baseCost || !quantityTotal || !closingTime) {
+            return res.status(400).json({
+                error: "title, baseCost, quantityTotal, and closingTime are required"
+            });
+        }
+
+        // Ensure closingTime is in the future
+        if (new Date(closingTime) <= new Date()) {
+            return res.status(400).json({ error: "closingTime must be in the future" });
+        }
+
+        // Create the listing — location is NOT needed here,
+        // it comes from VendorProfile when doing geo-queries
+        const listing = new Listing({
+            vendorId: vendorProfile._id,
+            title,
+            description,
+            images: images || [],
+            baseCost,
+            quantityTotal,
+            quantityAvailable: quantityTotal, // initially all available
+            closingTime: new Date(closingTime),
+        });
+
+        await listing.save();
+
+        // Increment activeListingsCount on vendor profile
+        await VendorProfile.findByIdAndUpdate(vendorProfile._id, {
+            $inc: { activeListingsCount: 1 }
+        });
+
+        res.status(201).json({
+            message: "Item added successfully",
+            data: listing
+        });
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
+module.exports = itemRouter;
