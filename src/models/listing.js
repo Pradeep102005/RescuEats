@@ -46,19 +46,6 @@ const listingSchema = new mongoose.Schema(
             min: 0,
         },
 
-        location: {
-            type: {
-                type: String,
-                enum: ["Point"],
-                default: "Point",
-            },
-
-            coordinates: {
-                type: [Number],
-                required: true, // [lng, lat]
-            },
-        },
-
         closingTime: {
             type: Date,
             required: true,
@@ -75,7 +62,6 @@ const listingSchema = new mongoose.Schema(
     }
 );
 
-listingSchema.index({ location: "2dsphere" });
 
 listingSchema.index({
     vendorId: 1,
