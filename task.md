@@ -4,20 +4,20 @@
   - [x] Create folder structure: `src/config`, `src/models`, etc.
   - [x] Create Mongoose schemas for `User`, `VendorProfile`, `Listing`, `Reservation`, `Payment`, `Rating`, `Report`, and `Notification`
 - [ ] **Role-Based Authentication (RBAC)**
-  - [ ] Setup MongoDB configuration in `src/config/database.js`
-  - [ ] Write registration and login controllers with JWT signing
-  - [ ] Build `userAuth` and `checkRole` middlewares
+  - [x] Setup MongoDB configuration in `src/config/database.js`
+  - [x] Write registration and login controllers with JWT signing
+  - [x] Build `userAuth` and `checkRole` middlewares
 - [ ] **Frontend Auth Flow**
-  - [ ] Install React Router & Axios in frontend
-  - [ ] Build forms for login & registration (with role toggle)
-  - [ ] Setup Axios client with interceptor for JWT
-  - [ ] Implement Private Route wrapper and Role Dashboards
+  - [x] Install React Router & Axios in frontend
+  - [x] Build forms for login & registration (with role toggle)
+  - [x] Setup Axios client with interceptor for JWT
+  - [x] Implement Private Route wrapper and Role Dashboards
 
 ## Phase 2: S3 Media Pipeline & Listing CRUD
 - [ ] **AWS S3 Integration**
-  - [ ] Setup S3 bucket CORS
-  - [ ] Create S3 pre-signed URL backend route
-  - [ ] Build frontend image upload component (direct-to-S3)
+  - [x] Setup S3 bucket CORS
+  - [x] Create S3 pre-signed URL backend route
+  - [x] Build frontend image upload component (direct-to-S3)
 - [ ] **Listings Creation & Management**
   - [ ] Create Knex migration for `listings` table (PostGIS spatial geometry, foreign keys)
   - [ ] Implement expired listings cron purge query

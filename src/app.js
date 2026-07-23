@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -5,6 +6,7 @@ const http = require("http");
 const connectDb = require("./config/database");
 const authRouter = require("./routes/auth");
 const itemRouter = require("./routes/addItem");
+const uploadRouter = require("./routes/upload");
 const userAuth = require("./middlewares/userAuth");
 const checkRole = require("./middlewares/checkRole");
 
@@ -26,6 +28,7 @@ app.use("/", authRouter);
 // Vendor-only routes — auth + role gated at mount level
 // Any request to /vendor/* must pass through userAuth → checkRole("vendor")
 app.use("/vendor", userAuth, checkRole("vendor"), itemRouter);
+app.use("/vendor", userAuth, checkRole("vendor"), uploadRouter);
 
 const server = http.createServer(app);
 
