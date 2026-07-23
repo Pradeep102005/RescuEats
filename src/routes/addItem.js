@@ -58,4 +58,22 @@ itemRouter.post("/add-item", async (req, res) => {
     }
 });
 
+// 2. Get My Listings — returns all listings belonging to this vendor
+itemRouter.get("/my-listings", async (req, res) => {
+    try {
+        const vendorProfile = await VendorProfile.findOne({ userId: req.user._id });
+        if (!vendorProfile) {
+            return res.status(404).json({ error: "Vendor profile not found." });
+        }
+
+        const listings = await Listing.find({ vendorId: vendorProfile._id })
+            .sort({ createdAt: -1 });
+
+        res.status(200).json({ data: listings });
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
 module.exports = itemRouter;
+
