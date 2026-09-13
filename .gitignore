@@ -22,3 +22,8 @@ logs/
 Thumbs.db
 .vscode/
 .idea/
+
+# Internal planning / working docs
+implementation_plan.md
+task.md
+interview-prep.md
