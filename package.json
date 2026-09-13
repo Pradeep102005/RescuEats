@@ -30,7 +30,9 @@
     "jsonwebtoken": "^9.0.3",
     "knex": "^3.2.10",
     "mongoose": "^9.7.4",
+    "node-cron": "^4.6.0",
     "pg": "^8.22.0",
+    "razorpay": "^2.9.8",
     "validator": "^13.11.0"
   }
 }

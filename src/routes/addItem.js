@@ -75,5 +75,34 @@ itemRouter.get("/my-listings", async (req, res) => {
     }
 });
 
-module.exports = itemRouter;
+// 3. Delete Listing — auth already guarantees this is the vendor
+itemRouter.delete("/listings/:id", async (req, res) => {
+    try {
+        const vendorProfile = await VendorProfile.findOne({ userId: req.user._id });
+        if (!vendorProfile) {
+            return res.status(404).json({ error: "Vendor profile not found." });
+        }
 
+        // Single query scoped to this vendor — if it's not theirs, returns null
+        const listing = await Listing.findOneAndDelete({
+            _id: req.params.id,
+            vendorId: vendorProfile._id,
+        });
+
+        if (!listing) {
+            return res.status(404).json({ error: "Listing not found." });
+        }
+
+        if (listing.status === "active") {
+            await VendorProfile.findByIdAndUpdate(vendorProfile._id, {
+                $inc: { activeListingsCount: -1 },
+            });
+        }
+
+        res.status(200).json({ message: "Listing deleted successfully." });
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
+module.exports = itemRouter;
